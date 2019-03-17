@@ -17,7 +17,7 @@ export class MyProfileComponent implements OnInit {
   ngOnInit() {
     
   }
-  Edit(name: string, email: string) {
+  Edit() {
     this.userService.Edit(this.name, this.email).subscribe((data) => {
       console.log(data);
     });
