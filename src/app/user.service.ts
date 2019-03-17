@@ -13,7 +13,10 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-    readonly rootUrl = "http://localhost:5000";
+    private rootUrl = "/api";
+    httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
   // selectedUser: User = {
   //   name: '',
@@ -28,5 +31,19 @@ export class UserService {
   userAuthentication(model: SignIn) {
     return this.http.post(this.rootUrl+'/signIn',model);
   }
+  
+  Edit(name: string, email: string) {
+    console.log(name, email)
+    const user : User= {
+      name: name,
+      email: email,
+      password: ''
+    }
+    return this.http.post(this.rootUrl + '/modifyUser', user);
+  }
 
+  Delete(email) {
+    email = {email: email}
+    return this.http.post(this.rootUrl + '/deleteUser', email);
+  }
 }

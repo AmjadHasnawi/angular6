@@ -53,7 +53,7 @@ app.post("/api/world", (req, res) => {
 //////////////////////////////////////////////////////////////
 //                            SignIn                         //
 /////////////////////////////////////////////////////////////
-app.post("/signIn", function(req, res) {
+app.post("/api/signIn", function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
 
@@ -91,7 +91,7 @@ app.post("/signIn", function(req, res) {
 //////////////////////////////////////////////////////////////
 //                            SignUp                         //
 //////////////////////////////////////////////////////////////
-app.post("/signUp", function(req, res, next) {
+app.post("/api/signUp", function(req, res, next) {
   console.log('body for sign up', req.body)
 
   var userExist = `select * from users where email =\"${req.body.email}\"`;
@@ -140,7 +140,7 @@ app.post("/signUp", function(req, res, next) {
   });
 });
 
-app.post('/getUsers', (req, res) => {
+app.post('/api/getUsers', (req, res) => {
   var email = req.body.email;
   console.log(req.body);
   var query = `select * from users where email =\"${email}\"`;
@@ -153,7 +153,7 @@ app.post('/getUsers', (req, res) => {
   });
 })
 
-app.get('/getUser', (req, res) => {
+app.get('/api/getUser', (req, res) => {
   var email = req.body.email;
   console.log(req.body);
   var query = `select * from users where email = 'az@gil.com'`;
@@ -166,8 +166,9 @@ app.get('/getUser', (req, res) => {
   });
 })
 
-app.get('/deleteUser', (req, res) => {
-  var query = `DELETE FROM users WHERE id = 4`;
+app.post('/api/deleteUser', (req, res) => {
+  console.log(req.body);
+  var query = `DELETE FROM users WHERE email = \"${req.body.email}\"`;
   dbConnection.Schema.query(query, function(err, result) {
     if (result) {
       res.send(result);
@@ -177,8 +178,9 @@ app.get('/deleteUser', (req, res) => {
   });
 })
 
-app.get('/modifyUser', (req, res) => {
-  var query = `UPDATE users SET name = 'Amjad' WHERE id = 10`;
+app.post('/api/modifyUser', (req, res) => {
+  console.log(req.body);
+  var query = `UPDATE users SET name = \"${req.body.name}\" WHERE email = \"${req.body.email}\"`;
   dbConnection.Schema.query(query, function(err, result) {
     if (result) {
       res.send(result);
